@@ -1,0 +1,1 @@
+# In this project I create a events side based with ticketmaster api. I had create cards  with the events inside. 
