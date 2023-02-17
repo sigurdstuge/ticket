@@ -51,7 +51,7 @@ export default function Events() {
 
 			information1.className = 'events__information'
 			title.className = 'events__title'
-			 artist.className = 'events__artist'
+			artist.className = 'events__artist'
 
 			information2.className = 'events__information'
 			date.className = 'events__date'
@@ -60,10 +60,10 @@ export default function Events() {
 			button.className = 'events__button';
 
 			// inner text 
-			title.innerText = event.name;
+			title.innerText = event?.name;
 			artist.innerText = 'Karpe, Emilie Nicolas, Vinni'
 			date.innerText = '1/7/23 - 3/7/23'
-			place.innerText = event.place
+			place.innerText = event?.place
 			button.innerText = 'Kjøp Billett'
 
 			// src 
