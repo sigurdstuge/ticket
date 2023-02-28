@@ -107,8 +107,6 @@ export default function Events() {
 		
 		allEvents.forEach(event => {
 			// create
-			const header = document.createElement('header');
-
 			const eventContainer = document.createElement('li');
 
 			const imagecontainer = document.createElement('div');
