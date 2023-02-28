@@ -1,4 +1,7 @@
 export default function Events() {
+	// Data 
+	let allEvents = null;
+
 	// queryselector
 	const filterButton = document.querySelector('.events__filter--button')
 
@@ -7,28 +10,105 @@ export default function Events() {
 
 	// handler
 	function handleFilterButtonInput() {
+		const currentSorting = filterButton.value;
 
-		console.log(filterButton.value)
+		if (currentSorting === 'place') {
+			sortEventsPlace();
+		} else if (currentSorting === 'price') {
+			sortEventsPrice();
+		} else if (currentSorting === 'name') {
+			sortEventsName();
+		} else if (currentSorting === 'date') {
+			sortEventsDate();
+		} 
+
+		renderEvents();
  	}
 
-
 	// api
-	
+
+
 	async function getEvents() {
-		const endpoint = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=aiGwC3SgJ3DbBEQwtB0AjKSLjrU36KAk&city=oslo&genreId=KnvZfZ7vAkJ';
+		const endpoint = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=aiGwC3SgJ3DbBEQwtB0AjKSLjrU36KAk&city=oslo';
 		const response = await fetch(endpoint)
 		const result = await response.json()
 		const events = result._embedded.events;
+		allEvents = events;
+	
+	
 
-		const container = document.querySelector('.events__container');
+		renderEvents();
+		console.log(events)
+	}
 
-		events.forEach(event => {
-			console.log(event)
-			renderEvent(event);
+	function sortEventsPrice() {
+		allEvents.sort((a, b) => {
+			if (a.priceRanges[0].min < b.priceRanges[0].min) {
+				return -1;
+			} else if (a.priceRanges[0].min > b.priceRanges[0].min) {
+				return 1;
+			} else {
+				return 0;
+			}
 		})
+	}
 
-		function renderEvent(event) {
+	function sortEventsName() {
+		allEvents.sort((a, b) => {
+			if (a.name < b.name) {
+				return -1;
+			} else if (a.name > b.name) {
+				return 1;
+			} else {
+				return 0;
+			}
+		})
+	}
+
+	function sortEventsPlace() {
+		allEvents.sort((a, b) => {
+			if (a._embedded.venues[0].name < b._embedded.venues[0].name) {
+				return -1;
+			} else if (a._embedded.venues[0].name > b._embedded.venues[0].name) {
+				return 1;
+			} else {
+				return 0;
+			}
+		})
+	}
+
+	function sortEventsPlace() {
+		allEvents.sort((a, b) => {
+			if (a._embedded.venues[0].name < b._embedded.venues[0].name) {
+				return -1;
+			} else if (a._embedded.venues[0].name > b._embedded.venues[0].name) {
+				return 1;
+			} else {
+				return 0;
+			}
+		})
+	}
+
+	function sortEventsDate() {
+		allEvents.sort((a, b) => {
+			if (a.dates.start.localDate < b.dates.start.localDate) {
+				return -1;
+			} else if (a.dates.start.localDate > b.dates.start.localDate) {
+				return 1;
+			} else {
+				return 0;
+			}
+		})
+	}
+	
+	function renderEvents() {
+		const container = document.querySelector('.events__container');
+		container.innerHTML = '';
+		
+		allEvents.forEach(event => {
 			// create
+			const header = document.createElement('header');
+
 			const eventContainer = document.createElement('li');
 
 			const imagecontainer = document.createElement('div');
@@ -36,7 +116,7 @@ export default function Events() {
 
 			const information1 = document.createElement('div');
 			const title = document.createElement('p');
-			const  artist = document.createElement('p')
+			const price = document.createElement('p')
 
 			const button = document.createElement('button')
 
@@ -51,7 +131,7 @@ export default function Events() {
 
 			information1.className = 'events__information'
 			title.className = 'events__title'
-			artist.className = 'events__artist'
+			price.className = 'events__price'
 
 			information2.className = 'events__information'
 			date.className = 'events__date'
@@ -61,20 +141,20 @@ export default function Events() {
 
 			// inner text 
 			title.innerText = event?.name;
-			artist.innerText = 'Karpe, Emilie Nicolas, Vinni'
-			date.innerText = '1/7/23 - 3/7/23'
-			place.innerText = event?.place
+			price.innerText = `${event?.priceRanges[0].min} NOK`;
+			date.innerText = event?.dates.start.localDate;
+			place.innerText = event?._embedded.venues[0].name;
 			button.innerText = 'Kjøp Billett'
 
 			// src 
-			image.src = 'https://images.squarespace-cdn.com/content/v1/5d8a08aa3ec7066969fbf263/1673356058950-XKLWZIVUNFG9SKUOYGJI/sol_2.jpg?format=2500w'
+			image.src = event?.images[0].url;
 
 			// append
 			imagecontainer.append(image)
 			eventContainer.append(imagecontainer)
 
 			information1.append(title)
-			information1.append( artist)
+			information1.append(price)
 			eventContainer.append(information1)
 
 			information2.append(date)
@@ -84,9 +164,7 @@ export default function Events() {
 			eventContainer.append(button)
 
 			container.append(eventContainer)
-		}
-		
-		renderEvent()
+		})
 	}
 
 	getEvents();
