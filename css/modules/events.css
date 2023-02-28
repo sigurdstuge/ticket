@@ -1,17 +1,21 @@
 .events {
-	padding: 2rem;
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
 }
 
+ 
 .events__container {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
+	padding: 2rem;
 }
 
-	 
+.events__topic {
+	font-size: 3rem;
+	font-weight: 600;
+}
 
 .events__card {
 	background-color: pink;
@@ -60,6 +64,8 @@
 }
 
 .events__filter {
+	background-color: lightblue;
+	padding: 2rem;
 	display: flex;
 	gap: 2rem;
 	align-items: center;
