@@ -1,16 +1,46 @@
 export default function Events() {
 	// Data 
 	let allEvents = null;
+	let allEventsSaved = null; 
+	let isNokFiltered = false; 
 
 	// queryselector
-	const filterButton = document.querySelector('.events__filter--button')
+	const sortMenu = document.querySelector('.events__filter--button')
+	const filterButton = document.querySelector('.events__sort-button')
 
 	// eventlistener
-	filterButton.addEventListener('input', handleFilterButtonInput)
+	sortMenu.addEventListener('input', handlesortMenuInput)
+	filterButton.addEventListener('click', handlefilterButtonClick)
 
 	// handler
-	function handleFilterButtonInput() {
-		const currentSorting = filterButton.value;
+	function handlefilterButtonClick() {
+		isNokFiltered = !isNokFiltered;
+
+		if (isNokFiltered) {
+			allEvents = allEvents.filter(event => {
+				const eventPrice = event.priceRanges[0].min;
+	
+				if (eventPrice <= 200) {
+					return true;
+				}
+			})
+		} else {
+			allEvents = allEventsSaved;
+		}
+
+		if(isNokFiltered === true) {
+			filterButton.classList.add('events__sort-button--active')
+		
+		} else {
+			filterButton.classList.remove('events__sort-button--active')
+		}
+
+		renderEvents();
+	}
+	
+	
+	function handlesortMenuInput() {
+		const currentSorting = sortMenu.value;
 
 		if (currentSorting === 'place') {
 			sortEventsPlace();
@@ -20,10 +50,13 @@ export default function Events() {
 			sortEventsName();
 		} else if (currentSorting === 'date') {
 			sortEventsDate();
-		} 
+		} else if (currentSorting === 'all') {
+			getEvents();
+		}
 
 		renderEvents();
  	}
+
 
 	// api
 
@@ -34,12 +67,12 @@ export default function Events() {
 		const result = await response.json()
 		const events = result._embedded.events;
 		allEvents = events;
+		allEventsSaved = events;
 	
-	
-
 		renderEvents();
 		console.log(events)
 	}
+
 
 	function sortEventsPrice() {
 		allEvents.sort((a, b) => {

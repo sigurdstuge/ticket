@@ -83,10 +83,19 @@
 	transform: scale(1.3);
 }
 
+.events__sort-button {
+	border: solid 1px gray;
+	padding: 1rem;
+}
 
-@media(min-width:500px) {
+.events__sort-button--active {
+	background-color: darkgray;
+}
+
+@media(min-width: 430px) {
 	.events__card {
 		display: flex;
+		flex-wrap: wrap;
 	}
 	
 }
