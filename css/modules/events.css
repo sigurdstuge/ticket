@@ -92,10 +92,18 @@
 	background-color: darkgray;
 }
 
-@media(min-width: 430px) {
-	.events__card {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	
+@media screen and (min-width: 490px) {
+	.events__container {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}	
 }
+
+@media screen and (min-width: 1000px) {
+	.events__container {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+	}	
+
+}
+
