@@ -3,16 +3,48 @@ export default function Events() {
 	let allEvents = null;
 	let allEventsSaved = null; 
 	let isNokFiltered = false; 
+	let isSearchOpen = false
 
 	// queryselector
 	const sortMenu = document.querySelector('.events__filter--button')
 	const filterButton = document.querySelector('.events__sort-button')
+	const search =  document.querySelector('.events__search')
+	const searchButton = document.querySelector('.events__icon-container')
 
 	// eventlistener
 	sortMenu.addEventListener('input', handlesortMenuInput)
 	filterButton.addEventListener('click', handlefilterButtonClick)
+	search.addEventListener('input', handleSearchInput)
+	searchButton.addEventListener('click', handleSearchButtonClick)
 
 	// handler
+
+	function handleSearchButtonClick() {
+		console.log('hei')
+		isSearchOpen = !isSearchOpen
+
+		if(isSearchOpen=== true) {
+			search.classList.add('events__search--open')
+		} else {
+			search.classList.remove('events__search--open')
+		}
+	}
+	
+	
+
+	function handleSearchInput() {
+ 		const searchValue = search.value.toLowerCase();
+
+		allEvents = allEvents.filter(event => {
+			const eventTitle = event.name.toLowerCase();
+
+			return eventTitle.includes(searchValue)
+		})
+
+		renderEvents();
+	}
+	
+	
 	function handlefilterButtonClick() {
 		isNokFiltered = !isNokFiltered;
 
@@ -149,7 +181,7 @@ export default function Events() {
 			const title = document.createElement('p');
 			const price = document.createElement('p')
 
-			const button = document.createElement('button')
+			const button = document.createElement('a')
 
 			const information2 = document.createElement('div');
 			const date = document.createElement('p')
@@ -175,10 +207,13 @@ export default function Events() {
 			price.innerText = `${event?.priceRanges[0].min} NOK`;
 			date.innerText = event?.dates.start.localDate;
 			place.innerText = event?._embedded.venues[0].name;
-			button.innerText = 'Kjøp Billett'
+			button.innerText = 'Kjøp Billett' 
 
 			// src 
 			image.src = event?.images[0].url;
+
+			//Href
+			button.href = event.url
 
 			// append
 			imagecontainer.append(image)
