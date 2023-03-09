@@ -1,3 +1,5 @@
+import { APIKey } from '../env.js'
+
 export default function Events() {
 	// Data 
 	let allEvents = null;
@@ -20,7 +22,6 @@ export default function Events() {
 	// handler
 
 	function handleSearchButtonClick() {
-		console.log('hei')
 		isSearchOpen = !isSearchOpen
 
 		if(isSearchOpen=== true) {
@@ -33,6 +34,8 @@ export default function Events() {
 	
 
 	function handleSearchInput() {
+		allEvents = [...allEventsSaved];
+		
  		const searchValue = search.value.toLowerCase();
 
 		allEvents = allEvents.filter(event => {
@@ -94,7 +97,7 @@ export default function Events() {
 
 
 	async function getEvents() {
-		const endpoint = 'https://app.ticketmaster.com/discovery/v2/events.json?apikey=aiGwC3SgJ3DbBEQwtB0AjKSLjrU36KAk&city=oslo';
+		const endpoint = `https://app.ticketmaster.com/discovery/v2/events.json?apikey=${APIKey}k&city=oslo`;
 		const response = await fetch(endpoint)
 		const result = await response.json()
 		const events = result._embedded.events;
@@ -102,7 +105,6 @@ export default function Events() {
 		allEventsSaved = events;
 	
 		renderEvents();
-		console.log(events)
 	}
 
 
@@ -204,7 +206,7 @@ export default function Events() {
 
 			// inner text 
 			title.innerText = event?.name;
-			price.innerText = `${event?.priceRanges[0].min} NOK`;
+			price.innerText = `${event?.priceRanges?.[0].min} NOK`;
 			date.innerText = event?.dates.start.localDate;
 			place.innerText = event?._embedded.venues[0].name;
 			button.innerText = 'Kjøp Billett' 
@@ -224,7 +226,10 @@ export default function Events() {
 			eventContainer.append(information1)
 
 			information2.append(date)
-			information2.append(place)
+			
+			if(event?._embedded.venues[0].name) {
+				information2.append(place)
+			}
 			eventContainer.append(information2)
 
 			eventContainer.append(button)
