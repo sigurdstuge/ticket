@@ -14,3 +14,7 @@ img {
 button {
 	cursor: pointer;
 }
+
+a:visited {
+	color: inherit;
+}
