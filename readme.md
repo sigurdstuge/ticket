@@ -1,1 +1,2 @@
-# In this project I create a events side based with ticketmaster api. I had create cards  with the events inside. 
+# Ticketmaster API
+In this project I render events based on what i fetch with Ticketmaster API. Each event is represented as a card. The website is responsive. The API key is hidden. 
