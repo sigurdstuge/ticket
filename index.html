@@ -11,15 +11,21 @@
 	<body>
 		<div class="events">
 			<header class="events__filter">
-				<p class="events__topic">	sorter etter</p>
-				
-				<select class="events__filter--button" name="" id="">
-					<option value="all">Alle</option>
-					<option value="date">Dato</option>
-					<option value="name">Arrangement</option>
-					<option value="price">pris</option>
-					<option value="place">Sted</option>
-				</select>
+				<a class="events__logo" href="#">
+					<img src="/assets/logo.svg" alt="">
+				</a>
+
+				<div class="events__filter__container">
+					<p class="events__topic">	sorter etter:</p>
+					
+					<select class="events__filter--button" name="" id="">
+						<option value="all">Alle</option>
+						<option value="date">Dato</option>
+						<option value="name">Arrangement</option>
+						<option value="price">pris</option>
+						<option value="place">Sted</option>
+					</select>
+				</div>
 
 				<button class="events__sort-button">mindre enn 200 KR</button>
 
@@ -27,7 +33,7 @@
 					<img class="events__icon" src="/assets/search.svg" alt="">
 				</button>
 
-				<input class="events__search" type="search"> 
+				<input class="events__search" type="search" placeholder="søk"> 
 			</header>
 
 			<ul class="events__container">
