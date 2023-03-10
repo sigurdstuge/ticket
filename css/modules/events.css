@@ -86,7 +86,7 @@
 	align-items: center;
 	position: relative;
 	justify-content: space-between;
-	background-color: lightblue;
+	background-color: blue;
 }
 
 .events__filter__container {
@@ -127,7 +127,7 @@
 
 .events__search {
 	border: solid 2px white;
-	background-color: lightblue;
+	background-color: blue;
 	display: none;
 	position: absolute;
 	left: 0;
