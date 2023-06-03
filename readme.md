@@ -8,3 +8,7 @@ MVP for me is understandable code and beeing able to fetch events and present it
 - When on bottom get more events
 - Choose city for the events
 - Add map for the event location
+
+## link
+
+- GitHub repository: [github.com/sigurdstuge/ticket] (https://github.com/sigurdstuge/ticket)
